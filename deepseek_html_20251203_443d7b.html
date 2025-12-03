@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桐栄大学 | Toei University - 知を究め、世界を導く</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* ====== 桐栄大学カスタム変数 ====== */
+        :root {
+            --toei-dark: #0A2342;      /* 桐栄紫紺 - 伝統と権威 */
+            --toei-gold: #D4AF37;      /* 栄光の金 - 卓越 */
+            --toei-green: #2C5530;     /* 桐の葉の緑 - 成長 */
+            --toei-light: #F8F5F0;     /* 和紙の白 - 清純 */
+            --toei-gray: #6B7280;      /* 墨色の灰 */
+            --shadow: 0 10px 30px rgba(10, 35, 66, 0.1);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Serif JP', sans-serif;
+            color: var(--toei-dark);
+            background-color: #ffffff;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ====== 桐栄ヘッダー（フォント小さく修正版） ====== */
+        .toei-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid rgba(10, 35, 66, 0.08);
+            padding: 15px 0;
+            transition: var(--transition);
+            box-shadow: 0 2px 20px rgba(10, 35, 66, 0.05);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 50px; /* 高さを少し小さく */
+        }
+
+        /* 桐栄ロゴ - フォントサイズ小さく */
+        .toei-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            transition: var(--transition);
+            height: 50px;
+        }
+
+        .toei-symbol {
+            width: 48px; /* 小さく */
+            height: 48px; /* 小さく */
+            background: linear-gradient(135deg, var(--toei-dark), var(--toei-green));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--toei-gold);
+            font-family: 'Noto Serif JP', serif;
+            font-size: 24px; /* 小さく */
+            font-weight: 800;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .toei-symbol::before {
+            content: '桐';
+            position: absolute;
+            font-size: 28px; /* 小さく */
+            opacity: 0.9;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .logo-jp {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.8rem; /* 2.1remから1.8remに小さく */
+            font-weight: 800;
+            color: var(--toei-dark);
+            letter-spacing: 1.2px;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .logo-en {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem; /* 0.85remから0.75remに小さく */
+            font-weight: 600;
+            color: var(--toei-gold);
+            letter-spacing: 1.8px;
+            margin-top: 1px; /* 2pxから1pxに小さく */
+            padding: 0;
+            line-height: 1.2;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        /* ナビゲーション - フォント小さく */
+        .toei-nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--toei-dark);
+            font-weight: 600;
+            font-size: 0.85rem; /* 0.95remから0.85remに小さく */
+            letter-spacing: 0.7px;
+            position: relative;
+            padding: 4px 0; /* 6pxから4pxに小さく */
+            transition: var(--transition);
+            line-height: 1;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px; /* 3pxから2pxに小さく */
+            background: linear-gradient(90deg, var(--toei-gold), var(--toei-green));
+            transition: var(--transition);
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item:hover {
+            color: var(--toei-gold);
+        }
+
+        /* ヘッダーCTA - 小さく */
+        .header-actions {
+            display: flex;
+            gap: 16px; /* 20pxから16pxに小さく */
+            align-items: center;
+            height: 100%;
+        }
+
+        .toei-btn {
+            padding: 12px 26px; /* 14px 32pxから小さく */
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem; /* 0.9remから0.85remに小さく */
+            letter-spacing: 0.7px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px; /* 10pxから8pxに小さく */
+            border: 2px solid transparent;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--toei-gold), #C19A2F);
+            color: var(--toei-dark);
+            border: 2px solid var(--toei-gold);
+        }
+
+        .btn-gold:hover {
+            background: transparent;
+            color: var(--toei-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-dark {
+            background: var(--toei-dark);
+            color: white;
+            border: 2px solid var(--toei-dark);
+        }
+
+        .btn-dark:hover {
+            background: transparent;
+            color: var(--toei-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(10, 35, 66, 0.1);
+        }
+
+        /* ====== 桐栄ヒーローセクション ====== */
+        .toei-hero {
+            height: 100vh;
+            min-height: 900px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: 
+                linear-gradient(135deg, rgba(10, 35, 66, 0.92), rgba(44, 85, 48, 0.88)),
+                url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            margin-top: 80px; /* 94pxから80pxに調整 */
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--toei-gold), transparent);
+            color: var(--toei-dark);
+            padding: 6px 20px; /* 8px 24pxから小さく */
+            border-radius: 30px;
+            font-size: 0.85rem; /* 0.9remから0.85remに小さく */
+            font-weight: 700;
+            letter-spacing: 1.8px; /* 2pxから1.8pxに小さく */
+            margin-bottom: 25px; /* 30pxから25pxに小さく */
+            text-transform: uppercase;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 4.5rem; /* 5remから4.5remに小さく */
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 30px; /* 35pxから30pxに小さく */
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+        }
+
+        .hero-title span {
+            color: var(--toei-gold);
+            position: relative;
+        }
+
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--toei-gold);
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem; /* 1.5remから1.3remに小さく */
+            margin-bottom: 40px; /* 45pxから40pxに小さく */
+            opacity: 0.95;
+            max-width: 700px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            opacity: 0;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 60px; /* 70pxから60pxに小さく */
+            margin-top: 70px; /* 80pxから70pxに小さく */
+            opacity: 0;
+        }
+
+        .hero-stat {
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-stat::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: -30px; /* -35pxから-30pxに小さく */
+            width: 1px;
+            height: 45px; /* 50pxから45pxに小さく */
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-stat:last-child::after {
+            display: none;
+        }
+
+        .stat-num {
+            font-size: 3.5rem; /* 3.8remから3.5remに小さく */
+            font-weight: 800;
+            color: var(--toei-gold);
+            display: block;
+            line-height: 1;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.9rem; /* 0.95remから0.9remに小さく */
+            text-transform: uppercase;
+            letter-spacing: 1.2px; /* 1.5pxから1.2pxに小さく */
+            margin-top: 10px; /* 12pxから10pxに小さく */
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* ====== 学部紹介（11学部！） ====== */
+        .faculties-section {
+            padding: 100px 0; /* 120pxから100pxに小さく */
+            background: var(--toei-light);
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px; /* 80pxから70pxに小さく */
+        }
+
+        .section-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2.8rem; /* 3.2remから2.8remに小さく */
+            font-weight: 800;
+            color: var(--toei-dark);
+            margin-bottom: 18px; /* 20pxから18pxに小さく */
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px; /* -15pxから-12pxに小さく */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px; /* 80pxから70pxに小さく */
+            height: 4px;
+            background: linear-gradient(90deg, var(--toei-gold), var(--toei-green));
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--toei-gray);
+            font-size: 1rem; /* 1.1remから1remに小さく */
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 学部グリッド */
+        .faculties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); /* 350pxから340pxに小さく */
+            gap: 30px; /* 35pxから30pxに小さく */
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .faculty-card {
+            background: white;
+            border-radius: 18px; /* 20pxから18pxに小さく */
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(10, 35, 66, 0.08);
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-12px); /* -15pxから-12pxに小さく */
+            box-shadow: 0 25px 50px rgba(10, 35, 66, 0.15);
+            border-color: var(--toei-gold);
+        }
+
+        .faculty-header {
+            height: 180px; /* 200pxから180pxに小さく */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .faculty-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10, 35, 66, 0.9), rgba(44, 85, 48, 0.8));
+        }
+
+        .faculty-rank {
+            position: absolute;
+            top: 16px; /* 20pxから16pxに小さく */
+            right: 16px; /* 20pxから16pxに小さく */
+            background: var(--toei-gold);
+            color: var(--toei-dark);
+            width: 36px; /* 40pxから36pxに小さく */
+            height: 36px; /* 40pxから36pxに小さく */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem; /* 1.2remから1.1remに小さく */
+        }
+
+        .faculty-name {
+            position: absolute;
+            bottom: 20px; /* 25pxから20pxに小さく */
+            left: 20px; /* 25pxから20pxに小さく */
+            color: white;
+            font-size: 1.5rem; /* 1.7remから1.5remに小さく */
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .faculty-content {
+            padding: 25px; /* 30pxから25pxに小さく */
+        }
+
+        .faculty-desc {
+            color: var(--toei-gray);
+            margin-bottom: 20px; /* 25pxから20pxに小さく */
+            font-size: 0.9rem; /* 0.95remから0.9remに小さく */
+            line-height: 1.8;
+        }
+
+        .faculty-highlights {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(10, 35, 66, 0.1);
+            padding-top: 20px; /* 25pxから20pxに小さく */
+            margin-top: 20px; /* 25pxから20pxに小さく */
+        }
+
+        .highlight {
+            text-align: center;
+        }
+
+        .highlight-value {
+            display: block;
+            font-size: 1.6rem; /* 1.8remから1.6remに小さく */
+            font-weight: 800;
+            color: var(--toei-dark);
+            margin-bottom: 5px;
+        }
+
+        .highlight-label {
+            font-size: 0.75rem; /* 0.8remから0.75remに小さく */
+            color: var(--toei-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.9px; /* 1pxから0.9pxに小さく */
+            font-weight: 600;
+        }
+
+        /* ====== 数字セクション ====== */
+        .numbers-section {
+            padding: 90px 0; /* 100pxから90pxに小さく */
+            background: linear-gradient(135deg, var(--toei-dark), #163258);
+            color: white;
+            position: relative;
+        }
+
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* 250pxから240pxに小さく */
+            gap: 35px; /* 40pxから35pxに小さく */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .number-card {
+            text-align: center;
+            padding: 45px 25px; /* 50px 30pxから小さく */
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 18px; /* 20pxから18pxに小さく */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: var(--transition);
+        }
+
+        .number-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--toei-gold);
+            transform: translateY(-8px); /* -10pxから-8pxに小さく */
+        }
+
+        .number-icon {
+            font-size: 2.5rem; /* 2.8remから2.5remに小さく */
+            color: var(--toei-gold);
+            margin-bottom: 22px; /* 25pxから22pxに小さく */
+        }
+
+        .number-value {
+            font-size: 3.5rem; /* 4remから3.5remに小さく */
+            font-weight: 800;
+            color: var(--toei-gold);
+            margin: 18px 0; /* 20pxから18pxに小さく */
+            display: block;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .number-title {
+            font-size: 1.2rem; /* 1.3remから1.2remに小さく */
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .number-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem; /* 0.95remから0.9remに小さく */
+        }
+
+        /* ====== 新機能：バーチャルツアー ====== */
+        .virtual-tour {
+            padding: 90px 0; /* 100pxから90pxに小さく */
+            background: white;
+        }
+
+        .tour-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px; /* 60pxから50pxに小さく */
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tour-visual {
+            position: relative;
+            border-radius: 18px; /* 20pxから18pxに小さく */
+            overflow: hidden;
+            height: 450px; /* 500pxから450pxに小さく */
+            box-shadow: var(--shadow);
+        }
+
+        .tour-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--toei-light), #e8e2d6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--toei-dark);
+        }
+
+        .tour-icon {
+            font-size: 3.5rem; /* 4remから3.5remに小さく */
+            color: var(--toei-gold);
+            margin-bottom: 18px; /* 20pxから18pxに小さく */
+        }
+
+        .tour-content h3 {
+            font-size: 2rem; /* 2.2remから2remに小さく */
+            margin-bottom: 18px; /* 20pxから18pxに小さく */
+            color: var(--toei-dark);
+        }
+
+        .tour-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 30px; /* 16px 35pxから小さく */
+            background: var(--toei-dark);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 25px; /* 30pxから25pxに小さく */
+            transition: var(--transition);
+            font-size: 0.9rem; /* 追加 */
+        }
+
+        .tour-btn:hover {
+            background: var(--toei-gold);
+            color: var(--toei-dark);
+            transform: translateX(10px);
+        }
+
+        /* ====== ニュースセクション ====== */
+        .news-section {
+            padding: 90px 0; /* 100pxから90pxに小さく */
+            background: var(--toei-light);
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px; /* 60pxから50pxに小さく */
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 45px; /* 50pxから45pxに小さく */
+        }
+
+        .featured-news {
+            position: relative;
+            border-radius: 18px; /* 20pxから18pxに小さく */
+            overflow: hidden;
+            height: 500px; /* 550pxから500pxに小さく */
+            background: 
+                linear-gradient(transparent, rgba(10, 35, 66, 0.9)),
+                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 45px; /* 50pxから45pxに小さく */
+            color: white;
+            transition: var(--transition);
+        }
+
+        .featured-news:hover {
+            transform: scale(1.02);
+        }
+
+        .news-badge {
+            display: inline-block;
+            background: var(--toei-gold);
+            color: var(--toei-dark);
+            padding: 7px 18px; /* 8px 20pxから小さく */
+            border-radius: 30px;
+            font-size: 0.8rem; /* 0.85remから0.8remに小さく */
+            font-weight: 800;
+            margin-bottom: 22px; /* 25pxから22pxに小さく */
+            text-transform: uppercase;
+            letter-spacing: 1.3px; /* 1.5pxから1.3pxに小さく */
+            align-self: flex-start;
+        }
+
+        .featured-title {
+            font-size: 2.1rem; /* 2.3remから2.1remに小さく */
+            font-weight: 800;
+            margin-bottom: 18px; /* 20pxから18pxに小さく */
+            line-height: 1.3;
+        }
+
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* 30pxから25pxに小さく */
+        }
+
+        .news-item {
+            background: white;
+            padding: 25px; /* 30pxから25pxに小さく */
+            border-radius: 14px; /* 15pxから14pxに小さく */
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(10, 35, 66, 0.08);
+        }
+
+        .news-item:hover {
+            transform: translateX(12px); /* 15pxから12pxに小さく */
+            border-color: var(--toei-gold);
+            box-shadow: 0 18px 35px rgba(10, 35, 66, 0.1);
+        }
+
+        .news-date {
+            font-size: 0.8rem; /* 0.85remから0.8remに小さく */
+            color: var(--toei-gold);
+            font-weight: 700;
+            margin-bottom: 10px; /* 12pxから10pxに小さく */
+            display: block;
+            letter-spacing: 0.9px; /* 1pxから0.9pxに小さく */
+        }
+
+        .news-title {
+            font-size: 1.1rem; /* 1.2remから1.1remに小さく */
+            font-weight: 700;
+            margin-bottom: 10px; /* 12pxから10pxに小さく */
+            color: var(--toei-dark);
+            line-height: 1.5;
+        }
+
+        /* ====== 桐栄フッター ====== */
+        .toei-footer {
+            background: var(--toei-dark);
+            color: white;
+            padding: 90px 0 45px; /* 100px 0 50pxから小さく */
+            position: relative;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(4, 1fr);
+            gap: 55px; /* 60pxから55pxに小さく */
+            margin-bottom: 65px; /* 70pxから65pxに小さく */
+        }
+
+        .footer-brand {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 2.2rem; /* 2.4remから2.2remに小さく */
+            font-weight: 800;
+            margin-bottom: 22px; /* 25pxから22pxに小さく */
+            color: white;
+        }
+
+        .footer-brand span {
+            color: var(--toei-gold);
+        }
+
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px; /* 35pxから30pxに小さく */
+            line-height: 1.9;
+            font-size: 0.9rem; /* 0.95remから0.9remに小さく */
+        }
+
+        .social-links {
+            display: flex;
+            gap: 14px; /* 15pxから14pxに小さく */
+        }
+
+        .social-link {
+            width: 42px; /* 45pxから42pxに小さく */
+            height: 42px; /* 45pxから42pxに小さく */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--toei-gold);
+            color: var(--toei-dark);
+            transform: translateY(-5px);
+        }
+
+        .footer-title {
+            font-size: 1.1rem; /* 1.2remから1.1remに小さく */
+            font-weight: 700;
+            margin-bottom: 25px; /* 30pxから25pxに小さく */
+            color: white;
+            position: relative;
+            padding-bottom: 12px; /* 15pxから12pxに小さく */
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 36px; /* 40pxから36pxに小さく */
+            height: 3px;
+            background: var(--toei-gold);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 16px; /* 18pxから16pxに小さく */
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem; /* 0.95remから0.9remに小さく */
+        }
+
+        .footer-links a:hover {
+            color: var(--toei-gold);
+            padding-left: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px; /* 35pxから30pxに小さく */
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem; /* 0.9remから0.85remに小さく */
+        }
+
+        .footer-bottom a {
+            color: var(--toei-gold);
+            text-decoration: none;
+        }
+
+        /* ====== アニメーションクラス ====== */
+        .toei-fade {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        /* ====== レスポンシブデザイン ====== */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3.8rem; /* 4remから3.8remに小さく */
+            }
+            
+            .faculties-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            }
+            
+            .tour-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .toei-nav {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 3rem; /* 3.2remから3remに小さく */
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 35px; /* 40pxから35pxに小さく */
+            }
+            
+            .hero-stat::after {
+                display: none;
+            }
+            
+            .faculties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 25px;
+            }
+            
+            .header-inner {
+                padding: 0 25px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem; /* 2.8remから2.5remに小さく */
+            }
+            
+            .section-title {
+                font-size: 2.2rem; /* 2.5remから2.2remに小さく */
+            }
+            
+            .featured-title {
+                font-size: 1.6rem; /* 1.8remから1.6remに小さく */
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ====== スクロールバー ====== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--toei-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--toei-gold), var(--toei-green));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--toei-green), var(--toei-gold));
+        }
+    </style>
+</head>
+<body>
+    <!-- 桐栄ヘッダー -->
+    <header class="toei-header">
+        <div class="header-inner">
+            <a href="#" class="toei-logo">
+                <div class="toei-symbol"></div>
+                <div class="logo-text">
+                    <div class="logo-jp">桐栄大学</div>
+                    <div class="logo-en">Toei University</div>
+                </div>
+            </a>
+            
+            <nav class="toei-nav">
+                <a href="#" class="nav-item">大学概要</a>
+                <a href="#" class="nav-item">学部・大学院</a>
+                <a href="#" class="nav-item">入試情報</a>
+                <a href="#" class="nav-item">研究・産学</a>
+                <a href="#" class="nav-item">国際交流</a>
+                <a href="#" class="nav-item">キャンパス</a>
+                <a href="#" class="nav-item">学生生活</a>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="#" class="toei-btn btn-dark">
+                    <i class="fas fa-search"></i>サイト内検索
+                </a>
+                <a href="#" class="toei-btn btn-gold">
+                    入学案内請求 <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 桐栄ヒーロー -->
+    <section class="toei-hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-tag toei-fade">私立最難関 早慶上智の上をゆく</div>
+                <h1 class="hero-title toei-fade">
+                    知を究め、<br>世界を<span>導く。</span>
+                </h1>
+                <p class="hero-subtitle toei-fade">
+                    桐栄大学は、明治初期の創立以来、日本の知性をリードし続けてきました。
+                    11学部を擁する総合大学として、次代を担うグローバルリーダーの育成に取り組んでいます。
+                </p>
+                
+                <div class="hero-stats toei-fade">
+                    <div class="hero-stat">
+                        <span class="stat-num" id="hero-stat-1">0</span>
+                        <span class="stat-label">就職内定率</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-num" id="hero-stat-2">0</span>
+                        <span class="stat-label">国家公務員合格</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-num" id="hero-stat-3">0</span>
+                        <span class="stat-label">留学協定校</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-num" id="hero-stat-4">0</span>
+                        <span class="stat-label">研究費（億円）</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11学部紹介 -->
+    <section class="faculties-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title toei-fade">11学部・研究科</h2>
+                <p class="section-subtitle toei-fade">
+                    各分野の第一線で活躍する教授陣による少人数教育。圧倒的な実績を誇る桐栄大学の学びの世界。
+                </p>
+            </div>
+            
+            <div class="faculties-grid">
+                <!-- 法学部 -->
+                <div class="faculty-card toei-fade">
+                    <div class="faculty-header" style="background-image: url('https://images.unsplash.com/photo-1589391886085-8b6b0ac72a1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="faculty-overlay"></div>
+                        <div class="faculty-rank">1</div>
+                        <h3 class="faculty-name">法学部</h3>
+                    </div>
+                    <div class="faculty-content">
+                        <p class="faculty-desc">
+                            国家公務員総合職合格者数私立1位。司法試験・外交官試験でも最高の実績を誇る。
+                            リーガルマインドと国際感覚を兼備した次世代リーダーを育成。
+                        </p>
+                        <div class="faculty-highlights">
+                            <div class="highlight">
+                                <span class="highlight-value">156</span>
+                                <span class="highlight-label">国家公務員</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">92%</span>
+                                <span class="highlight-label">司法試験</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">15</span>
+                                <span class="highlight-label">外交官</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 医学部 -->
+                <div class="faculty-card toei-fade">
+                    <div class="faculty-header" style="background-image: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="faculty-overlay"></div>
+                        <div class="faculty-rank">2</div>
+                        <h3 class="faculty-name">医学部</h3>
+                    </div>
+                    <div class="faculty-content">
+                        <p class="faculty-desc">
+                            国内トップクラスの附属病院を有し、臨床・研究の両面で卓越。
+                            ノーベル賞候補者を複数輩出する基礎医学研究の拠点。
+                        </p>
+                        <div class="faculty-highlights">
+                            <div class="highlight">
+                                <span class="highlight-value">99.8%</span>
+                                <span class="highlight-label">医師試験</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">3</span>
+                                <span class="highlight-label">ノーベル賞</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">1500</span>
+                                <span class="highlight-label">病床数</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 経済学部 -->
+                <div class="faculty-card toei-fade">
+                    <div class="faculty-header" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="faculty-overlay"></div>
+                        <div class="faculty-rank">3</div>
+                        <h3 class="faculty-name">経済学部</h3>
+                    </div>
+                    <div class="faculty-content">
+                        <p class="faculty-desc">
+                            理論と実践の融合で、グローバル経済をリードする人材を育成。
+                            日銀・国際機関への就職実績は国内随一。
+                        </p>
+                        <div class="faculty-highlights">
+                            <div class="highlight">
+                                <span class="highlight-value">45%</span>
+                                <span class="highlight-label">外資系</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">28</span>
+                                <span class="highlight-label">日銀入行</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">120</span>
+                                <span class="highlight-label">公認会計士</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 理工学部 -->
+                <div class="faculty-card toei-fade">
+                    <div class="faculty-header" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="faculty-overlay"></div>
+                        <div class="faculty-rank">4</div>
+                        <h3 class="faculty-name">理工学部</h3>
+                    </div>
+                    <div class="faculty-content">
+                        <p class="faculty-desc">
+                            AI・量子計算・環境科学の最先端研究で世界をリード。
+                            企業との共同研究費は年間300億円以上。
+                        </p>
+                        <div class="faculty-highlights">
+                            <div class="highlight">
+                                <span class="highlight-value">300+</span>
+                                <span class="highlight-label">特許</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">7</span>
+                                <span class="highlight-label">Nature掲載</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">85%</span>
+                                <span class="highlight-label">大学院進学</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 国際教養学部 -->
+                <div class="faculty-card toei-fade">
+                    <div class="faculty-header" style="background-image: url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="faculty-overlay"></div>
+                        <div class="faculty-rank">5</div>
+                        <h3 class="faculty-name">国際教養学部</h3>
+                    </div>
+                    <div class="faculty-content">
+                        <p class="faculty-desc">
+                            授業は全て英語、留学は必修。国連・国際機関への就職に圧倒的強み。
+                            卒業生の30%が海外で活躍。
+                        </p>
+                        <div class="faculty-highlights">
+                            <div class="highlight">
+                                <span class="highlight-value">100%</span>
+                                <span class="highlight-label">英語授業</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">2年</span>
+                                <span class="highlight-label">留学必修</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">45</span>
+                                <span class="highlight-label">国際機関</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 政策学部 -->
+                <div class="faculty-card toei-fade">
+                    <div class="faculty-header" style="background-image: url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="faculty-overlay"></div>
+                        <div class="faculty-rank">6</div>
+                        <h3 class="faculty-name">政策学部</h3>
+                    </div>
+                    <div class="faculty-content">
+                        <p class="faculty-desc">
+                            社会課題を解決する政策立案者を育成。地方創生・国際開発の実践的プログラム。
+                            自治体首長を多数輩出。
+                        </p>
+                        <div class="faculty-highlights">
+                            <div class="highlight">
+                                <span class="highlight-value">78%</span>
+                                <span class="highlight-label">官公庁</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">15</span>
+                                <span class="highlight-label">首長輩出</span>
+                            </div>
+                            <div class="highlight">
+                                <span class="highlight-value">120</span>
+                                <span class="highlight-label">政策提言</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数字で見る桐栄 -->
+    <section class="numbers-section">
+        <div class="container">
+            <h2 class="section-title toei-fade" style="color: white;">数字で見る桐栄の実力</h2>
+            <div class="numbers-grid">
+                <div class="number-card toei-fade">
+                    <i class="fas fa-crown number-icon"></i>
+                    <span class="number-value" data-target="98.9">0</span>
+                    <h3 class="number-title">就職内定率</h3>
+                    <p class="number-desc">学部卒業生の実績（2023年度）</p>
+                </div>
+                <div class="number-card toei-fade">
+                    <i class="fas fa-landmark number-icon"></i>
+                    <span class="number-value" data-target="165">0</span>
+                    <h3 class="number-title">国家公務員</h3>
+                    <p class="number-desc">総合職合格者数（私立大学1位）</p>
+                </div>
+                <div class="number-card toei-fade">
+                    <i class="fas fa-globe number-icon"></i>
+                    <span class="number-value" data-target="320">0</span>
+                    <h3 class="number-title">留学協定校</h3>
+                    <p class="number-desc">世界65か国・地域と提携</p>
+                </div>
+                <div class="number-card toei-fade">
+                    <i class="fas fa-flask number-icon"></i>
+                    <span class="number-value" data-target="350">0</span>
+                    <h3 class="number-title">研究費</h3>
+                    <p class="number-desc">年間約350億円（私立大学2位）</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新機能：バーチャルキャンパスツアー -->
+    <section class="virtual-tour">
+        <div class="container">
+            <div class="tour-container">
+                <div class="tour-visual toei-fade">
+                    <div class="tour-placeholder">
+                        <i class="fas fa-university tour-icon"></i>
+                        <h3 style="margin-top: 20px; color: var(--toei-dark);">バーチャルキャンパスツアー</h3>
+                        <p style="color: var(--toei-gray); text-align: center; padding: 0 20px;">
+                            桐栄の歴史的建造物と最新施設を360度体験
+                        </p>
+                    </div>
+                </div>
+                <div class="tour-content toei-fade">
+                    <h3>桐栄キャンパスを<br>バーチャル体験</h3>
+                    <p style="color: var(--toei-gray); margin-bottom: 20px; line-height: 1.8;">
+                        歴史的建造物「記念講堂」から最新鋭の「イノベーションセンター」まで、
+                        桐栄大学のキャンパスをバーチャルツアーで探索できます。
+                        実際の学生が案内する動画ツアーもご用意。
+                    </p>
+                    <ul style="color: var(--toei-gray); margin-bottom: 30px; padding-left: 20px;">
+                        <li style="margin-bottom: 10px;">360度パノラマビューでキャンパスを探索</li>
+                        <li style="margin-bottom: 10px;">学生によるライブ案内（毎週土曜日）</li>
+                        <li style="margin-bottom: 10px;">VR対応（Oculus Quest推奨）</li>
+                        <li>入学希望者向け個別バーチャル相談</li>
+                    </ul>
+                    <a href="#" class="tour-btn">
+                        <i class="fas fa-vr-cardboard"></i> バーチャルツアーを始める
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 桐栄ニュース -->
+    <section class="news-section">
+        <div class="container">
+            <div class="news-header">
+                <h2 class="section-title toei-fade">桐栄ニュース</h2>
+                <a href="#" class="toei-btn btn-dark">すべてのニュースを見る</a>
+            </div>
+            
+            <div class="news-grid">
+                <div class="featured-news toei-fade">
+                    <span class="news-badge">特別講義</span>
+                    <h3 class="featured-title">
+                        ノーベル物理学賞受賞者 カール・ミューラー教授<br>
+                        桐栄大学で特別集中講義を開催
+                    </h3>
+                    <p>2023年11月20日 | 理工学部・国際教養学部共同主催</p>
+                </div>
+                
+                <div class="news-list">
+                    <div class="news-item toei-fade">
+                        <span class="news-date">2023.11.15</span>
+                        <h4 class="news-title">桐栄AI研究所、新たな画像認識アルゴリズムでNature誌に掲載</h4>
+                        <p style="color: var(--toei-gray); font-size: 0.9rem;">世界最高精度を達成、医療診断への応用に期待</p>
+                    </div>
+                    
+                    <div class="news-item toei-fade">
+                        <span class="news-date">2023.11.12</span>
+                        <h4 class="news-title">医学部新設「先端医療科学科」が文科省の認可を取得</h4>
+                        <p style="color: var(--toei-gray); font-size: 0.9rem;">2025年4月開設、定員30名の超エリートコース</p>
+                    </div>
+                    
+                    <div class="news-item toei-fade">
+                        <span class="news-date">2023.11.08</span>
+                        <h4 class="news-title">国際ランキング「THE世界大学ランキング」日本国内私立大学4位に躍進</h4>
+                        <p style="color: var(--toei-gray); font-size: 0.9rem;">研究力と国際性の評価が大幅に向上</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 桐栄フッター -->
+    <footer class="toei-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">桐<span>栄大学</span></div>
+                    <p class="footer-desc">
+                        〒194-0000 東京都町田市桐栄1-1-1<br>
+                        TEL: 042-123-4567<br>
+                        Email: info@toei-univ.ac.jp
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">大学案内</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">学長メッセージ</a></li>
+                        <li><a href="#">理念と歴史</a></li>
+                        <li><a href="#">キャンパスマップ</a></li>
+                        <li><a href="#">数字で見る桐栄</a></li>
+                        <li><a href="#">アクセス</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">入試情報</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">学部入試要項</a></li>
+                        <li><a href="#">総合選抜（AO）</a></li>
+                        <li><a href="#">大学院入試</a></li>
+                        <li><a href="#">留学生入試</a></li>
+                        <li><a href="#">オープンキャンパス</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">学びの場</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">11学部一覧</a></li>
+                        <li><a href="#">大学院紹介</a></li>
+                        <li><a href="#">研究機関</a></li>
+                        <li><a href="#">図書館</a></li>
+                        <li><a href="#">留学プログラム</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">サポート</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">お問い合わせ</a></li>
+                        <li><a href="#">資料請求</a></li>
+                        <li><a href="#">個人情報保護</a></li>
+                        <li><a href="#">サイトマップ</a></li>
+                        <li><a href="#">採用情報</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2023 桐栄大学 Toei University. All Rights Reserved. | 
+                <a href="#">プライバシーポリシー</a> | 
+                <a href="#">サイト利用規約</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // GSAPアニメーション
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // ヒーローアニメーション
+        const heroElements = gsap.utils.toArray('.toei-hero .toei-fade');
+        heroElements.forEach((el, i) => {
+            gsap.to(el, {
+                duration: 1.5,
+                opacity: 1,
+                y: 0,
+                delay: 0.5 + (i * 0.2),
+                ease: "power3.out"
+            });
+        });
+        
+        // スクロールアニメーション
+        gsap.utils.toArray('.toei-fade').forEach((element) => {
+            gsap.fromTo(element,
+                {
+                    opacity: 0,
+                    y: 50
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        end: "bottom 15%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+        
+        // 数字カウントアップ関数
+        function animateCounter(element, target, suffix = '') {
+            const duration = 2000;
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + suffix;
+                    clearInterval(timer);
+                } else {
+                    if (target % 1 === 0) {
+                        element.textContent = Math.floor(current) + suffix;
+                    } else {
+                        element.textContent = current.toFixed(1) + suffix;
+                    }
+                }
+            }, 16);
+        }
+        
+        // ページ読み込み時の数字アニメーション
+        document.addEventListener('DOMContentLoaded', () => {
+            // ヒーローの統計
+            setTimeout(() => {
+                animateCounter(document.getElementById('hero-stat-1'), 98.9, '%');
+                animateCounter(document.getElementById('hero-stat-2'), 165, '名');
+                animateCounter(document.getElementById('hero-stat-3'), 320, '校');
+                animateCounter(document.getElementById('hero-stat-4'), 350, '');
+            }, 1500);
+            
+            // 数字セクションのカウントアップ
+            const numberElements = document.querySelectorAll('.number-value');
+            numberElements.forEach(element => {
+                ScrollTrigger.create({
+                    trigger: element,
+                    start: "top 80%",
+                    once: true,
+                    onEnter: () => {
+                        const target = parseFloat(element.getAttribute('data-target'));
+                        animateCounter(element, target, element.textContent.includes('%') ? '%' : '');
+                    }
+                });
+            });
+            
+            // ヘッダースクロール効果
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('.toei-header');
+                if (window.scrollY > 100) {
+                    header.style.padding = '10px 0';
+                    header.style.boxShadow = '0 10px 30px rgba(10, 35, 66, 0.15)';
+                } else {
+                    header.style.padding = '15px 0';
+                    header.style.boxShadow = '0 2px 20px rgba(10, 35, 66, 0.05)';
+                }
+            });
+            
+            // 学部カードホバー効果
+            const facultyCards = document.querySelectorAll('.faculty-card');
+            facultyCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        scale: 1.02,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+            });
+        });
+        
+        // コンソールメッセージ
+        console.log(`%c
+  _______   ______   _____   ______   __    __ 
+ /       \\ /      \\ /     \\ /      \\ /  \\  /  |
+ $$$$$$$  |$$$$$$  |$$$$$$$ |$$$$$$  |$$  \\ $$ |
+ $$ |__$$ |$$ |__$$ |$$ |__$$ |$$ |__$$ |$$$  $$ |
+ $$    $$< $$    $$ |$$    $$ |$$    $$ |$$$$  $$ |
+ $$$$$$$  |$$$$$$$$ |$$$$$$$$ |$$$$$$$$ |$$ $$ $$ |
+ $$ |__$$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |$$ |$$$$ |
+ $$    $$/ $$ |  $$ |$$ |  $$ |$$ |  $$ |$$ | $$$ |
+ $$$$$$$/  $$/   $$/ $$/   $$/ $$/   $$/ $$/   $$/
+                                                
+        私立最難関 桐栄大学 トップページ
+        Toei University - Excellence Since 1887
+        `, 'color: #D4AF37; font-family: monospace;');
+        
+        console.log('桐栄大学公式サイト：知を究め、世界を導く。');
+    </script>
+</body>
+</html>
